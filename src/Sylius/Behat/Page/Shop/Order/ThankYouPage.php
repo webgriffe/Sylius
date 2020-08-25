@@ -61,7 +61,7 @@ class ThankYouPage extends SymfonyPage implements ThankYouPageInterface
 
     public function getRouteName(): string
     {
-        return 'sylius_shop_thank_you';
+        return 'sylius_shop_order_thank_you';
     }
 
     protected function getDefinedElements(): array
