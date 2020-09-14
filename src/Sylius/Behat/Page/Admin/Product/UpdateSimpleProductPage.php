@@ -388,6 +388,25 @@ class UpdateSimpleProductPage extends BaseUpdatePage implements UpdateSimpleProd
         return strpos($this->getElement('prices')->getHtml(), $channelName) === false;
     }
 
+    public function openTaxonBookmarks(): void
+    {
+        $this->getElement('taxonomy')->click();
+    }
+
+    public function searchForTaxonToSetAsMainTaxon(string $phrase): void
+    {
+        $mainTaxonElement = $this->getElement('main_taxon')->getParent();
+
+        AutocompleteHelper::searchForValue($this->getSession(), $mainTaxonElement, $phrase);
+    }
+
+    public function getSearchResultsTaxonsToSetAsMainTaxon(): array
+    {
+        $mainTaxonElement = $this->getElement('main_taxon')->getParent();
+
+        return AutocompleteHelper::getSearchResults($mainTaxonElement);
+    }
+
     protected function getCodeElement(): NodeElement
     {
         return $this->getElement('code');
@@ -431,11 +450,6 @@ class UpdateSimpleProductPage extends BaseUpdatePage implements UpdateSimpleProd
             'toggle_slug_modification_button' => '[data-locale="%locale%"] .toggle-product-slug-modification',
             'enabled' => '#sylius_product_enabled',
         ]);
-    }
-
-    private function openTaxonBookmarks(): void
-    {
-        $this->getElement('taxonomy')->click();
     }
 
     private function clickTabIfItsNotActive(string $tabName): void

@@ -116,4 +116,10 @@ interface UpdateSimpleProductPageInterface extends BaseUpdatePageInterface
     public function enable(): void;
 
     public function hasNoPriceForChannel(string $channelName): bool;
+
+    public function openTaxonBookmarks(): void;
+
+    public function searchForTaxonToSetAsMainTaxon(string $phrase): void;
+
+    public function getSearchResultsTaxonsToSetAsMainTaxon(): array;
 }

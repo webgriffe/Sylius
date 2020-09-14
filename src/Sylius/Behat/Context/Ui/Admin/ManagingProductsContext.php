@@ -1137,6 +1137,41 @@ final class ManagingProductsContext implements Context
     }
 
     /**
+     * @When I look for a taxon with :phrase in name to set as main taxon
+     */
+    public function iLookForATaxonWithInNameToSetAsMainTaxon(string $phrase)
+    {
+        $currentPage = $this->resolveCurrentPage();
+
+        $currentPage->openTaxonBookmarks();
+        $currentPage->searchForTaxonToSetAsMainTaxon($phrase);
+    }
+
+    /**
+     * @Then /^I should see (\d+) taxons on the list$/
+     */
+    public function iShouldSeeTaxonsOnTheList(int $number)
+    {
+        $currentPage = $this->resolveCurrentPage();
+
+        Assert::count($currentPage->getSearchResultsTaxonsToSetAsMainTaxon(), $number);
+    }
+
+    /**
+     * @Then I should see the taxon named :firstName in the list
+     * @Then I should see the taxon named :firstName and :secondName in the list
+     * @Then I should see the taxon named :firstName, :secondName and :thirdName in the list
+     * @Then I should see the taxon named :firstName, :secondName, :thirdName and :fourthName in the list
+     */
+    public function iShouldSeeTheTaxonNamedAnd(...$expectedTaxonNames)
+    {
+        $currentPage = $this->resolveCurrentPage();
+        $taxonNames = $currentPage->getSearchResultsTaxonsToSetAsMainTaxon();
+
+        Assert::allOneOf($taxonNames, $expectedTaxonNames);
+    }
+
+    /**
      * @param string $element
      * @param string $value
      */

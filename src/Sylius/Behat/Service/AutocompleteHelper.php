@@ -46,6 +46,27 @@ abstract class AutocompleteHelper
         static::waitForElementToBeVisible($session, $element);
     }
 
+    public static function searchForValue(Session $session, NodeElement $element, string $phrase)
+    {
+        static::activateAutocompleteDropdown($session, $element);
+
+        $element->find('css', 'input.search')->setValue($phrase);
+
+        self::waitForStartSearching($session);
+        JQueryHelper::waitForAsynchronousActionsToFinish($session);
+    }
+
+
+    public static function getSearchResults(NodeElement $element)
+    {
+        return array_map(
+            function (NodeElement $result) {
+                return $result->getText();
+            },
+            $element->findAll('css', 'div.item')
+        );
+    }
+
     private static function activateAutocompleteDropdown(Session $session, NodeElement $element)
     {
         JQueryHelper::waitForAsynchronousActionsToFinish($session);
@@ -62,5 +83,10 @@ abstract class AutocompleteHelper
             '$(document.evaluate("%s", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).dropdown("is visible")',
             str_replace('"', '\"', $element->getXpath())
         ));
+    }
+
+    private static function waitForStartSearching(Session $session)
+    {
+        $session->wait(5000, '$(\'.loading\').length > 0');
     }
 }

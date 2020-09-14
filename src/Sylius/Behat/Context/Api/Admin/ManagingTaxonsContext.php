@@ -35,15 +35,6 @@ final class ManagingTaxonsContext implements Context
     }
 
     /**
-     * @When I look for a taxon with :phrase in name
-     */
-    public function iTypeIn($phrase)
-    {
-        $this->client->getCookieJar()->set(new Cookie($this->session->getName(), $this->session->getId()));
-        $this->client->request('GET', '/admin/ajax/taxons/search', ['phrase' => $phrase], [], ['ACCEPT' => 'application/json']);
-    }
-
-    /**
      * @When I want to get taxon with :code code
      */
     public function iWantToGetTaxonWithCode($code)
@@ -68,29 +59,5 @@ final class ManagingTaxonsContext implements Context
     {
         $this->client->getCookieJar()->set(new Cookie($this->session->getName(), $this->session->getId()));
         $this->client->request('GET', '/admin/ajax/taxons/root-nodes', [], [], ['ACCEPT' => 'application/json']);
-    }
-
-    /**
-     * @Then /^I should see (\d+) taxons on the list$/
-     */
-    public function iShouldSeeTaxonsInTheList($number)
-    {
-        $response = json_decode($this->client->getResponse()->getContent(), true);
-
-        Assert::eq(count($response), $number);
-    }
-
-    /**
-     * @Then I should see the taxon named :firstName in the list
-     * @Then I should see the taxon named :firstName and :secondName in the list
-     * @Then I should see the taxon named :firstName, :secondName and :thirdName in the list
-     * @Then I should see the taxon named :firstName, :secondName, :thirdName and :fourthName in the list
-     */
-    public function iShouldSeeTheTaxonNamedAnd(...$expectedTaxonNames)
-    {
-        $response = json_decode($this->client->getResponse()->getContent(), true);
-        $taxonNames = array_column($response, 'name');
-
-        Assert::allOneOf($taxonNames, $expectedTaxonNames);
     }
 }
