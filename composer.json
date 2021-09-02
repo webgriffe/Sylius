@@ -162,7 +162,6 @@
         "jms/serializer-bundle": "3.9.0",
         "laminas/laminas-code": "^4.0",
         "symfony/doctrine-bridge": "4.4.16",
-        "symfony/polyfill-mbstring": "^1.22.0",
         "symfony/property-info": "4.4.22 || 5.2.7",
         "symfony/serializer": "4.4.19 || 5.2.2"
     },
@@ -186,7 +185,7 @@
         "mikey179/vfsstream": "^1.6",
         "mockery/mockery": "^1.4",
         "phpspec/phpspec": "^7.0",
-        "phpstan/phpstan": "0.12.82",
+        "phpstan/phpstan": "0.12.98",
         "phpstan/phpstan-doctrine": "0.12.33",
         "phpunit/phpunit": "^8.5",
         "psalm/plugin-mockery": "0.7.0",
